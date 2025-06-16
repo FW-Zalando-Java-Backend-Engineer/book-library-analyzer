@@ -44,5 +44,16 @@ public class LibraryAnalyzer {
 
     /**
      * Calculates average rating by genre.
+     * Groups books by genre and calculates the average rating per genre.
+     * Output: Map<String, Double> like { "History" → 4.05 }
      */
+    public  Map<String, Double> averageRatingByGenre(List<Book> books){
+        return books.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Book::getGenre,
+                                Collectors.averagingDouble(Book::getRating)
+                        )
+                );
+    }
 }
