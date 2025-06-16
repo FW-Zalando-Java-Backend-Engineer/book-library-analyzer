@@ -14,11 +14,15 @@ import java.util.stream.Collector;
  * and their average rating.
  */
 
-public class GenreSummaryCollector implements Collector<
-        Book,
-        Map<String, GenreSummary>,
-        Map<String, GenreSummary>
-        >{
+public class GenreSummaryCollector
+        implements
+        Collector
+                <
+        Book, // T
+        Map<String, GenreSummary>, // A
+        Map<String, GenreSummary>  // R
+        >
+{
     @Override
     public Supplier<Map<String, GenreSummary>> supplier() {
         // Creates a new empty HashMap to accumulate results
@@ -29,8 +33,10 @@ public class GenreSummaryCollector implements Collector<
     public BiConsumer<Map<String, GenreSummary>, Book> accumulator() {
         // For each book, update (or create if not exists) the genre's summary
         return (map, book) ->{
-            map.computeIfAbsent(book.getGenre(), g -> new GenreSummary())
-                    .addRating(book.getRating());
+            map.computeIfAbsent(
+                    book.getGenre(),
+                            g ->
+                                    new GenreSummary()).addRating(book.getRating());
         };
     }
 
@@ -54,10 +60,15 @@ public class GenreSummaryCollector implements Collector<
 
     @Override
     public BinaryOperator<Map<String, GenreSummary>> combiner() {
-        return (map1, map2)->{
-            map2.forEach((genre, summary) ->
-                    map1.merge(
-                            genre, summary, (s1, s2) ->  {
+        return
+                (map1, map2)
+                ->
+        {
+            map2.forEach(
+                    (genre, summary)
+                            ->
+                    map1.merge(genre, summary, (s1, s2)
+                            ->  {
                                 s1.setCount(s2.getCount()); // s1.count += s2.count
                                 s1.setTotalRating(s2.getTotalRating()); // s1.totalRating += s2.totalRating
                                 return s1;
