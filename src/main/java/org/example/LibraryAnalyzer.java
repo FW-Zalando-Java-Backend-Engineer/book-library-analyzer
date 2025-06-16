@@ -56,4 +56,15 @@ public class LibraryAnalyzer {
                         )
                 );
     }
+
+    /**
+     * Uses a custom collector to summarize genre statistics.
+     */
+    public Map<String, GenreSummary> summarizeGenres(List<Book> books){
+        return books.stream()
+                .collect(
+                        new GenreSummaryCollector()
+                );
+    }
+
 }

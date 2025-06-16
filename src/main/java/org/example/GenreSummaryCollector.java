@@ -14,7 +14,7 @@ import java.util.stream.Collector;
  * and their average rating.
  */
 
-public class GenreSummaryCollector implements  Collector<
+public class GenreSummaryCollector implements Collector<
         Book,
         Map<String, GenreSummary>,
         Map<String, GenreSummary>
@@ -95,18 +95,18 @@ public class GenreSummaryCollector implements  Collector<
 
     @Override
     public Function<Map<String, GenreSummary>, Map<String, GenreSummary>> finisher() {
-        return null;
+        return Function.identity(); //Just return the map as-is
     }
 
     @Override
     public Set<Characteristics> characteristics() {
-        return Set.of();
+        return Set.of(Characteristics.IDENTITY_FINISH);
     }
 
     /**
      * Why Is A and R the Same?
      * This is called identify and finish, and it means:
-     * "I don't want to convert my accumulator into something else , it's already the result I want.
+     * "I don't want to convert my accumulator into something else, it's already the result I want.
      * */
 
 
